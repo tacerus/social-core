@@ -300,12 +300,10 @@ class SAMLAuth(BaseAuth):
     def get_user_id(self, details, response) -> str:
         """
         Get the permanent ID for this user from the response.
-        We prefix each ID with the name of the IdP so that we can
-        connect multiple IdPs to this user.
         """
         idp = self.get_idp(response["idp_name"])
         uid = idp.get_user_permanent_id(response["attributes"])
-        return f"{idp.name}:{uid}"
+        return uid
 
     def auth_complete(self, *args, **kwargs):
         """
